@@ -5,7 +5,7 @@
      const html = ` 
         <ul>
             ${cards.map(card => Card(card)).join("")}
-        <ul>    
+        </ul>    
      
     `;
     render(html, document.getElementById('root'));
