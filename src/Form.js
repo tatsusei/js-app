@@ -11,31 +11,30 @@ class Form {
         this.API_URL = "";
         this.searchTerm = "";
         this.searchInput = document.querySelector('input[name="search"]');
-        this.searchInput.addEventListener('keyup', () => this.handleKeyup(event));
+        this.searchInput.addEventListener("keyup", () => this.handleKeyup(event));
 
         this.submitButton = document.querySelector('button[type="submit"]');
-
-        this.submitButton.disable = !this.searchTerm;
-
-        this.form = document.querySelector('form');
-        this.form.addEventListener('submit', ()=> this.handleSumbit(event));
+        this.submitButton.disabled = !this.searchTerm;
 
         this.clearButton = document.querySelector('button[type="button"]');
-        this.clearButton.addEventListener('click', ()=> this.clearCards())
+        this.clearButton.addEventListener("click", () => this.clearCards());
+        
+        this.form = document.querySelector("form");
+        this.form.addEventListener("submit", () => this.handleSubmit(event));
     }
-    handleKeyup(event){
+    handleKeyup(event) {
         this.searchTerm = event.target.value.trim();
         this.API_URL = `${API_URL}/${this.searchTerm}`;
+        this.submitButton.disabled = !this.searchTerm;
         console.log(this.API_URL)
     }
-
-    handleSumbit(event){
+    handleSubmit(event) {
         event.preventDefault(); 
         console.log(event);
         axios
             .get(this.API_URL)
-            .then( ( { data })=> this.addCard(data))
-            .catch(err => this.fromatError('Promis reject!', err));
+            .then(({ data }) => this.addCard(data))
+            .catch(err => this.formatError('Promise reject!', err));
         
         this.form.reset();
 
